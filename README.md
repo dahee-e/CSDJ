@@ -134,51 +134,53 @@ pip install -r requirements.txt
 
 ```python
 import networkx as nx
-from css import alg_kcore,alg_alphacore, alg_kecc, alg_khcore, alg_kpcore, alg_kpeak, alg_kscore, alg_ktruss, alg_kvcc
-from css import alg_kdistance_clique, alg_ksize_clique, alg_ktripeak, alg_kcoretruss, alg_scan ,common_utility
+from css import alg_kcore, alg_alphacoreR, alg_kecc, alg_khcore, alg_kpcore, alg_kpeak, alg_kscore, alg_ktruss,
 
-G = nx.karate_club_graph() # input graph
+alg_kvcc
+from css import alg_kdistance_clique, alg_ksize_clique, alg_ktripeak, alg_kcoretruss, alg_scan, common_utility
 
-C = alg_kcore.run(G, k=3) # run k-core 
+G = nx.karate_club_graph()  # input graph
+
+C = alg_kcore.run(G, k=3)  # run k-core 
 common_utility.print_result(G, C)
 
-C = alg_kscore.run(G, k=3,s=2) # run (k,s)-core 
+C = alg_kscore.run(G, k=3, s=2)  # run (k,s)-core 
 common_utility.print_result(G, C)
 
-C = alg_khcore.run(G, k=5, h=2) # run (k,h)-core
+C = alg_khcore.run(G, k=5, h=2)  # run (k,h)-core
 common_utility.print_result(G, C)
 
-C = alg_kpcore.run(G, k=3,p=0.5) # run (k,p)-core 
+C = alg_kpcore.run(G, k=3, p=0.5)  # run (k,p)-core 
 common_utility.print_result(G, C)
 
-C = alg_kpeak.run(G, k=3) # run k-peak 
+C = alg_kpeak.run(G, k=3)  # run k-peak 
 common_utility.print_result(G, C)
 
-C = alg_ktruss.run(G, k=4) # run k-truss
+C = alg_ktruss.run(G, k=4)  # run k-truss
 common_utility.print_result(G, C)
 
-C = alg_ktripeak.run(G, k=4) # run k-tripeak
+C = alg_ktripeak.run(G, k=4)  # run k-tripeak
 common_utility.print_result(G, C)
 
-C = alg_ksize_clique.run(G, k=5) # max k-clique
+C = alg_ksize_clique.run(G, k=5)  # max k-clique
 common_utility.print_result(G, C)
 
-C = alg_kdistance_clique.run(G, k=5) # run k-distance clique
+C = alg_kdistance_clique.run(G, k=5)  # run k-distance clique
 common_utility.print_result(G, C)
 
-C = alg_kvcc.run(G, k=3) # run k-VCC
+C = alg_kvcc.run(G, k=3)  # run k-VCC
 common_utility.print_result(G, C)
 
-C = alg_kecc.run(G, k=5) # run k-ECC
+C = alg_kecc.run(G, k=5)  # run k-ECC
 common_utility.print_result(G, C)
 
-C = alg_alphacore.run(G, alpha=0.1) # run Alphacore
+C = alg_alphacore.run(G, alpha=0.1)  # run Alphacore
 common_utility.print_result(G, C)
 
-C = alg_kcoretruss.run(G, k=5, alpha=1) # run k-core-truss
+C = alg_kcoretruss.run(G, k=5, alpha=1)  # run k-core-truss
 common_utility.print_result(G, C)
 
-C = alg_scan.run(G, k=3, epsilon=0.5) # run scan
+C = alg_scan.run(G, k=3, epsilon=0.5)  # run scan
 common_utility.print_result(G, C)
 
 ```
