@@ -134,9 +134,7 @@ pip install -r requirements.txt
 
 ```python
 import networkx as nx
-from css import alg_kcore, alg_alphacoreR, alg_kecc, alg_khcore, alg_kpcore, alg_kpeak, alg_kscore, alg_ktruss,
-
-alg_kvcc
+from css import alg_kcore, alg_alphacore, alg_kecc, alg_khcore, alg_kpcore, alg_kpeak, alg_kscore, alg_ktruss,alg_kvcc
 from css import alg_kdistance_clique, alg_ksize_clique, alg_ktripeak, alg_kcoretruss, alg_scan, common_utility
 
 G = nx.karate_club_graph()  # input graph
