@@ -25,7 +25,7 @@ def alphaCore(G, stepSize, startEpsi, expoDecay = True):
     data = computeNodeFeatures(G,weighted=weighted)
     #2 compute cov matrix to be used for all remainder of depth calculations
     matrix = data.drop("node", axis=1)  # convert dataframe to numeric matrix by removing first column containing nodeID
-    cov = np.cov(matrix.values.T)
+    cov = np.cov(matrix.values.T.astype(float))
     #3 calculate the Mahalanobis depth and add it to the respective row of the dataframe
     data['mahal'] = calculateMahalFromCenter(data, 0, cov)
     #4
