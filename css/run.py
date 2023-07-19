@@ -213,12 +213,12 @@ result = list()
 if C != None :
     result = list(C)
 print("----------------------------------------------------------")
-for comp in result:
-    comp = [int(x) for x in comp]
-    comp = sorted(comp, reverse=False)
-    for u in list(comp):
-        print(u, ' ', end="")
-    print("")
+# for comp in result:
+#     comp = [int(x) for x in comp]
+#     comp = sorted(comp, reverse=False)
+#     for u in list(comp):
+#         print(u, ' ', end="")
+#     print("")
 print("----------------------------------------------------------")
 
 
