@@ -120,8 +120,10 @@ def get_average_modularity(G, Cgraph):
     return sum/len(Cgraph)
 def get_avg_clustering_coefficient(C):
     return nx.average_clustering(C)
-def get_conductance(G, C):
+def get_conductance(G, C, V):
     combined_C = set().union(*[set(item) for item in C])
+    if G.number_of_nodes() == V:
+        return 0
     return nx.conductance(G, combined_C)
 def get_average_degree(V,E): #average degree of vertices in C
     return (2*E)/V
@@ -131,6 +133,8 @@ def get_cut_ratio(G,C,V):
     boundary = nx.cut_size(G,C)
     print(boundary)
     n = G.number_of_nodes()
+    if n == V:
+        return 0
     return boundary/(V*(n-V))
 def get_average_size(C):
     cnum = len(C)
@@ -165,7 +169,7 @@ def fewMetric(G, C):
     average_degree = get_average_degree(V,E)
     internal_density = get_internal_density(V,E)
     cut_ratio = 1 - get_cut_ratio(G,combined_graph,V)
-    inverse_conductance = 1.0 - get_conductance(G, C)
+    inverse_conductance = 1.0 - get_conductance(G, C,V)
     average_coefficient = get_avg_clustering_coefficient(combined_graph)
     average_size = get_average_size(C)
     num_of_sub = get_num_of_sub(C)
