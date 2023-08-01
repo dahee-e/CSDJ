@@ -246,18 +246,20 @@ if args.fullstatistics is True :
     f.close()
 
 else :
-    mod, v_density, e_density, inv_cond, size = common_utility.fewMetric(G, result)
-    print("resultant_statistic ", run_time, mod, v_density, e_density, inv_cond, size)
-
+    mod, avg_degree, inter_density, cut_ratio, inv_cond, avg_coeff, size, num_of_sub = common_utility.fewMetric(G, result)
+    print("resultant_statistic ", run_time, mod, avg_degree, inter_density, cut_ratio, inv_cond,avg_coeff,size,num_of_sub)
 
 
     with open(output, 'w') as f:
         f.write("seconds" + "\t" + str(run_time) + '\n')
         f.write("modularity" + "\t" + str(mod) + '\n')
-        f.write("v_density" + "\t" + str(v_density) + '\n')
-        f.write("e_density" + "\t" + str(e_density) + '\n')
+        f.write("average_degree" + "\t" + str(avg_degree) + '\n')
+        f.write("internal_density" + "\t" + str(inter_density) + '\n')
+        f.write("cut_ratio" + "\t" + str(cut_ratio) + '\n')
         f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
+        f.write("clustering coefficient" + "\t" + str(avg_coeff) + '\n')
         f.write("size" + "\t" + str(size) + '\n')
+        f.write("number_of_subgraph" + "\t" + str(num_of_sub) + '\n')
 
         for comp in result:
             comp = [int(x) for x in comp]
