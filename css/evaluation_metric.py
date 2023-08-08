@@ -239,7 +239,6 @@ else : #global
         f.write("cut_ratio" + "\t" + str(cut_ratio) + '\n')
         f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
         f.write("clustering coefficient" + "\t" + str(avg_coeff) + '\n')
-        f.write("V\t" + str(V) +"\n")
-        f.write("E\t"+str(E)+'\n')
+        f.write("num of node\t" + str(V) +"\n")
 
     f.close()
