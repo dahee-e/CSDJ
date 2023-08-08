@@ -221,52 +221,14 @@ print("----------------------------------------------------------")
 #     print("")
 print("----------------------------------------------------------")
 
+with open(output, 'w') as f:
+    f.write("seconds" + "\t" + str(run_time) + '\n')
 
-if args.fullstatistics is True :
-    mod, local_mod, v_density, e_density, inv_cond, diam, size = common_utility.metric(G, result)
-    print("resultant_statistic ", run_time, mod, local_mod, v_density, e_density, inv_cond, diam, size)
+    for comp in result:
+        comp = [int(x) for x in comp]
+        comp = sorted(comp, reverse=False)
+        for u in list(comp):
+            f.write(str(u) + " ")
+        f.write("\n")
 
-    with open(output, 'w') as f:
-        f.write("seconds" + "\t" + str(run_time) + '\n')
-        f.write("modularity" + "\t" + str(mod) + '\n')
-        f.write("local_modularity" + "\t" + str(local_mod) + '\n')
-        f.write("v_density" + "\t" + str(v_density) + '\n')
-        f.write("e_density" + "\t" + str(e_density) + '\n')
-        f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
-        f.write("diam" + "\t" + str(diam) + '\n')
-        f.write("size" + "\t" + str(size) + '\n')
-
-        for comp in result:
-            comp = [int(x) for x in comp]
-            comp = sorted(comp, reverse=False)
-            for u in list(comp):
-                f.write(str(u) + " ")
-            f.write("\n")
-
-    f.close()
-
-else :
-    mod, avg_degree, inter_density, cut_ratio, inv_cond, avg_coeff, size, num_of_sub = common_utility.fewMetric(G, result)
-    print("resultant_statistic ", run_time, mod, avg_degree, inter_density, cut_ratio, inv_cond,avg_coeff,size,num_of_sub)
-
-
-    with open(output, 'w') as f:
-        f.write("seconds" + "\t" + str(run_time) + '\n')
-        f.write("modularity" + "\t" + str(mod) + '\n')
-        f.write("average_degree" + "\t" + str(avg_degree) + '\n')
-        f.write("internal_density" + "\t" + str(inter_density) + '\n')
-        f.write("cut_ratio" + "\t" + str(cut_ratio) + '\n')
-        f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
-        f.write("clustering coefficient" + "\t" + str(avg_coeff) + '\n')
-        f.write("size" + "\t" + str(size) + '\n')
-        f.write("number_of_subgraph" + "\t" + str(num_of_sub) + '\n')
-
-        for comp in result:
-            comp = [int(x) for x in comp]
-            comp = sorted(comp, reverse=False)
-            for u in list(comp):
-                f.write(str(u) + " ")
-            f.write("\n")
-
-    f.close()
-
+f.close()
