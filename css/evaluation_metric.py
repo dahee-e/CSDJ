@@ -146,7 +146,7 @@ def metric_global(G, C):
 
 def metric_local(G, C):
     if len(C) == 0 :
-        return (None, None, None, None, None, 0, 0)
+        return (None, None, None, None, 0, 0)
     Cgraph = []
 
     for subset in C :
