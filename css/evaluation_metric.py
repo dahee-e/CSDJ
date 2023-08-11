@@ -7,43 +7,11 @@ import os
 def get_base(file_path) :
     path = os.path.dirname(file_path)
     return path+"/"
-
-def get_average_diameter(G, Cgraph):
-    sum = 0
-    for cg in Cgraph :
-        sum = sum + nx.diameter(cg)
-    return sum/len(Cgraph)
 def degreeSum(G, nodes):
     sum = 0
     for u in nodes:
         sum = sum + G.degree(u)
     return sum
-
-def volume(G, S, weight=None):
-    degree = G.out_degree if G.is_directed() else G.degree
-    return sum(d for v, d in degree(S, weight=weight))
-
-def get_average_local_modularity(G, C, Cgraph):
-
-    sum = 0
-    for idx, S in enumerate(C):
-        T = set(G) - set(S)
-        cgraph = Cgraph[idx]
-        out_degree = cut_size(G, S, T, None)
-        in_degree = cgraph.number_of_edges()
-        if out_degree == 0 :
-            sum += 0
-        else :
-            sum += in_degree/out_degree
-
-    return sum/len(C)
-def cut_size(G, S, T=None, weight=None):
-
-    edges = nx.edge_boundary(G, S, T, data=weight, default=1)
-    if G.is_directed():
-        edges = chain(edges, nx.edge_boundary(G, T, S, data=weight, default=1))
-    return sum(weight for u, v, weight in edges)
-
 def get_avg_graph_density(Cgraph):
     sum = 0
     for cg in Cgraph:
@@ -83,7 +51,7 @@ def get_num_of_sub(C):
 #new evaluation metric
 def get_avg_clustering_coefficient(C):
     return nx.average_clustering(C)
-def get_conductance_local(G, C):
+def get_conductance_local(G, C): #conductance of each community(local)
     sum = 0
     if len(C) == 1 :
         if len(C[0]) == len(G) :
@@ -92,8 +60,8 @@ def get_conductance_local(G, C):
         cd = nx.conductance(G, c)
         sum = sum + cd
     return sum / len(C)
-def get_conductance_global(G, C,V):
-    if G.number_of_nodes() == V:
+def get_conductance_global(G, C,V): #conductance of total community(global)
+    if G.number_of_nodes() == V: # if C is the whole graph
         return 0
     return nx.conductance(G,C)
 def get_average_degree(V,E): #average degree of vertices in C
@@ -102,27 +70,23 @@ def get_internal_density(V,E):
     return (2*E)/(V*(V-1))
 def get_cut_ratio(G,C,V):
     boundary = nx.cut_size(G,C)
-    print(boundary)
     n = G.number_of_nodes()
-    if n == V:
+    if n == V:  # if C is the whole graph
         return 0
     return boundary/(V*(n-V))
 
 
 
-#metric
-def metric_global(G, C):
+#metric (global, local)
+def metric_global(G, C): #global metric for total community
     if len(C) == 0 :
-        return (None, None, None, None,None,0, 0)
+        return (None, None, None, None,None,0, 0,0,0)
 
-    C = set(sum(C,[]))
+    num_of_sub = get_num_of_sub(C)
+    average_size = get_average_size(C)
+
+    C = set(sum(C,[])) # combine nodes from each community -> total community
     Cgraph = G.subgraph(C)
-
-
-    # average_local_modularity = get_average_local_modularity(G, C, Cgraph)
-    # average_diameter = get_average_diameter(G, Cgraph)
-    # average_graph_density = get_avg_graph_density(Cgraph)
-    # average_edge_density = get_avg_edge_density(Cgraph)
 
     V = Cgraph.number_of_nodes()
     E = Cgraph.number_of_edges()
@@ -141,10 +105,12 @@ def metric_global(G, C):
             inverse_conductance,
             average_coefficient,
             V,
-            E)
+            E,
+            average_size,
+            num_of_sub)
 
 
-def metric_local(G, C):
+def metric_local(G, C): #local metric for each community
     if len(C) == 0 :
         return (None, None, None, None, 0, 0)
     Cgraph = []
@@ -167,7 +133,7 @@ def metric_local(G, C):
             average_size,
             num_of_sub)
 
-# mod, local_mod, v_density, e_density, inv_cond, diam, size
+
 
 
 parser = argparse.ArgumentParser(description='measure')
@@ -223,13 +189,14 @@ if args.local == True: #local measure
         f.write("vertex_density" + "\t" + str(v_density) + '\n')
         f.write("edge_density" + "\t" + str(e_density) + '\n')
         f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
-        f.write("size" + "\t" + str(size) + '\n')
+        f.write("average size" + "\t" + str(size) + '\n')
         f.write("number_of_subgraph" + "\t" + str(num_of_sub) + '\n')
 
 
     f.close()
-else : #global
-    avg_degree, inter_density, cut_ratio, inv_cond, avg_coeff, V, E = metric_global(G, C)
+
+else : #global measure
+    avg_degree, inter_density, cut_ratio, inv_cond, avg_coeff, V, E,size, num_of_sub = metric_global(G, C)
     print("resultant_statistic ", avg_degree, inter_density, cut_ratio, inv_cond, avg_coeff, V,E)
     with open(output, 'w') as f:
         f.write(alg_name + '\n')
@@ -239,6 +206,8 @@ else : #global
         f.write("cut_ratio" + "\t" + str(cut_ratio) + '\n')
         f.write("inv_cond" + "\t" + str(inv_cond) + '\n')
         f.write("clustering coefficient" + "\t" + str(avg_coeff) + '\n')
+        f.write("number_of_subgraph" + "\t" + str(num_of_sub) + '\n')
+        f.write("average size" + "\t" + str(size) + '\n')
         f.write("V\t" + str(V) +"\n")
         f.write("E\t"+str(E)+'\n')
 
