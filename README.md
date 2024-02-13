@@ -339,7 +339,7 @@ The datasets are publicly available. You can download the datasets by checking t
 
 ## Contact
 
-Please feel free to contact @Jeongseon Kim (jeongseon@g.cnu.ac.kr) if you have any questions about the implementation. 
+Please feel free to contact @Dahee Kim (dahee@unist.ac.kr) if you have any questions about the implementation. 
 
 ---
 
